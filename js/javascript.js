@@ -42,6 +42,8 @@ function operate(num1,num2,operator) {
   return(value)
 }
 
+// https://stackoverflow.com/questions/33262256/add-click-event-after-another-click-event
+// I need to work on this, so when operator is clicked a 2nd time it doesnt keep triggering same event
 
 numBtns.forEach((btn) => {
   btn.addEventListener("click", () => {
@@ -54,20 +56,26 @@ numBtns.forEach((btn) => {
 
 signBtns.forEach((btn) => {
   btn.addEventListener("click", () => {
-    let displayText = document.querySelector('#display').textContent;
+    let curDisplayText = document.querySelector('#display').textContent;
     operation = btn.textContent
 
-
     if (storedNumber1 == null) {
-      storedNumber1 = parseFloat(displayText);
+      storedNumber1 = parseFloat(curDisplayText);
+      document.querySelector('#display').textContent = "0";
     } else {
-      storedNumber2 = parseFloat(displayText);
+      storedNumber2 = parseFloat(curDisplayText);
+      let interimNum = operate(storedNumber1, storedNumber2, operation);
+  
+      document.querySelector('#display').textContent = String(interimNum);
+
+      storedNumber1 = interimNum;
+      storedNumber2 = null;
     }
 
 
 
+
     
-    document.querySelector('#display').textContent = "0";
 
 
   })
